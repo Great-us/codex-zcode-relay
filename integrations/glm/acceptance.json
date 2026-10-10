@@ -1,0 +1,111 @@
+{
+  "verified_at": "2026-10-10T09:07:20.284402+00:00",
+  "codex_version": "0.162.1",
+  "endpoint": "https://open.bigmodel.cn/api/v1",
+  "profiles": [
+    {
+      "requested_model": "glm-5.3-flash",
+      "requested_effort": "low",
+      "http_status": 200,
+      "response_status": "completed",
+      "returned_model": "glm-5.3-flash",
+      "expected_output": true,
+      "passed": true,
+      "elapsed_seconds": 1.38
+    },
+    {
+      "requested_model": "glm-5.3-flash",
+      "requested_effort": "high",
+      "http_status": 200,
+      "response_status": "completed",
+      "returned_model": "glm-5.3-flash",
+      "expected_output": true,
+      "passed": true,
+      "elapsed_seconds": 2.39
+    },
+    {
+      "requested_model": "glm-5.3-flash",
+      "requested_effort": "max",
+      "http_status": 200,
+      "response_status": "completed",
+      "returned_model": "glm-5.3-flash",
+      "expected_output": true,
+      "passed": true,
+      "elapsed_seconds": 2.12
+    },
+    {
+      "requested_model": "glm-5.3",
+      "requested_effort": "low",
+      "http_status": 200,
+      "response_status": "completed",
+      "returned_model": "glm-5.3",
+      "expected_output": true,
+      "passed": true,
+      "elapsed_seconds": 3.14
+    },
+    {
+      "requested_model": "glm-5.3",
+      "requested_effort": "high",
+      "http_status": 200,
+      "response_status": "completed",
+      "returned_model": "glm-5.3",
+      "expected_output": true,
+      "passed": true,
+      "elapsed_seconds": 2.33
+    },
+    {
+      "requested_model": "glm-5.3",
+      "requested_effort": "max",
+      "http_status": 200,
+      "response_status": "completed",
+      "returned_model": "glm-5.3",
+      "expected_output": true,
+      "passed": true,
+      "elapsed_seconds": 2.66
+    }
+  ],
+  "full_high_first_exact_reply_failed_then_retested": true,
+  "file_tool_tests": [
+    {
+      "model": "glm-5.3-flash",
+      "effort": "low",
+      "read_compute_write_readback": true,
+      "independently_verified_artifact": {
+        "value": 323,
+        "marker": "GLM_NATIVE_DIRECT_OK"
+      }
+    },
+    {
+      "model": "glm-5.3",
+      "effort": "high",
+      "runner": "run-glm.py",
+      "read_compute_write_readback": true,
+      "independently_verified_artifact": {
+        "marker": "GLM_DIRECT_RUNNER_OK",
+        "value": 2491
+      }
+    }
+  ],
+  "native_cross_provider": {
+    "supported": false,
+    "observed_error": "The 'glm-5.3-flash' model is not supported when using Codex with a ChatGPT account.",
+    "cause": "Native agent roles inherit the parent provider; model_provider is not among applied role overrides.",
+    "source": "https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/core/src/agent/role.rs#L32-L82"
+  },
+  "default_supervisor": {
+    "model": "gpt-6.1-sol",
+    "provider": "openai",
+    "effort": "high"
+  },
+  "global_model_catalog_changed": false,
+  "ineffective_native_definitions_removed": true,
+  "authentication": {
+    "source": "Existing local ZCode Coding Plan key",
+    "key_copied": false
+  },
+  "runner": {
+    "overall_timeout_seconds": null,
+    "sandbox": "workspace-write/windows-unelevated",
+    "user_mcp_config_ignored": true
+  }
+}

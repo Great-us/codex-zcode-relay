@@ -4,6 +4,8 @@ Codex 主管通过 `zcode-bridge` controller MCP 派发独立任务；ZCode 桌�
 
 Windows、Node.js 24 及已登录的 ZCode 桌面是当前目标环境。按 [INSTALLATION.md](INSTALLATION.md) 安装依赖、生成本机配置，再启动 controller 和 worker。生成器仅写配置和 profile 副本；不会修改应用设置或用户 home。
 
+也提供 [Codex 直连 GLM 配置与执行器](integrations/glm/README.md)：复用本机 ZCode 保存的 Coding Plan API Key，启动独立 GLM Codex 进程并等待真实完成，不需要桌面 worker。该方式已验证模型 API 与文件工具；当前 Codex 0.162.1 的 GPT 原生子 agent 仍不能跨供应商切换到智谱。两种接入方式分别使用各自的安装说明。
+
 ## 任务闭环
 
 1. worker 核验桌面账户模型、实际载入的原生 profiles、工具和 MCP 超时设置，调用 `register_worker` 后保持 `receive_task` 等待。

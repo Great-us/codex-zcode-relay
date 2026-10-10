@@ -19,3 +19,6 @@ credentials/
 acceptance/long-wait-result.json
 .DS_Store
 Thumbs.db
+__pycache__/
+*.pyc
+integrations/glm/installation.json

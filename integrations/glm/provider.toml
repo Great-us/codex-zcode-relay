@@ -1,0 +1,13 @@
+[model_providers.zhipu_glm]
+name = "Zhipu GLM Coding Plan"
+base_url = "https://open.bigmodel.cn/api/v1"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false
+request_max_retries = 1
+
+[model_providers.zhipu_glm.auth]
+command = "@PYTHON_EXECUTABLE@"
+args = ["@GLM_AUTH_HELPER@"]
+refresh_interval_ms = 0
+timeout_ms = 10000

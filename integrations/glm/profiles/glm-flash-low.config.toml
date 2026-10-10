@@ -1,0 +1,4 @@
+model = "glm-5.3-flash"
+model_provider = "zhipu_glm"
+model_reasoning_effort = "low"
+model_catalog_json = "@GLM_MODEL_CATALOG@"

@@ -1,5 +1,7 @@
 # 使用 ZCode 外部子智能体
 
+下述 worker/MCP 流程适用于桌面中继。用户明确选择智谱 API 直连时，使用 `integrations/glm/run-glm.py` 启动独立 GLM Codex 进程，按相同的持续等待、独立验收与返修闭环执行，不要求桌面 worker。当前 Codex 0.162.1 不支持 GPT 原生子 agent 跨 provider 切换到智谱。
+
 先由用户在 ZCode 新开会话，发送生成的 worker 启动提示，完成注册并保持 `receive_task`。主管确认 `zcode_models` 中实际在线的模型、effort 与 profiles 后派发；接口不会自行启动已停止的桌面模型会话。
 
 派发时指定明确目标、workspace、允许读写的文件、模型与思考强度、工具与外部操作边界及验收标准。委派不扩大用户授权。
