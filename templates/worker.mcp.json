@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "codex-relay": {
+      "type": "stdio",
+      "command": "{{NODE_EXECUTABLE}}",
+      "args": ["{{REPOSITORY}}/relay-mcp.cjs", "worker"],
+      "env": {"ZCODE_RELAY_STATE": "{{STATE_DIRECTORY}}"},
+      "enabled": true,
+      "timeoutMs": 2147483647
+    }
+  }
+}

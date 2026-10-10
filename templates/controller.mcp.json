@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "zcode-bridge": {
+      "command": "{{NODE_EXECUTABLE}}",
+      "args": ["{{REPOSITORY}}/relay-mcp.cjs", "controller"],
+      "env": {
+        "ZCODE_RELAY_STATE": "{{STATE_DIRECTORY}}",
+        "ZCODE_BRIDGE_ALLOWED_ROOTS": "[\"{{WORKSPACE}}\"]"
+      }
+    }
+  }
+}

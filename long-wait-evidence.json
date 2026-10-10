@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-10T08:10:05.414Z",
+  "taskId": "5350d07f-b49b-4c11-bfbe-960a8971773b",
+  "agentId": "agent_01b4daa7-4402-4fc0-b8d9-6062fa62070d",
+  "profile": "codex-relay-glm53-flash-low",
+  "providerId": "account:bigmodel-individual-coding-plan",
+  "modelId": "GLM-5.3-Flash",
+  "effort": "low",
+  "dispatchedAt": "2026-10-10T08:06:28.176Z",
+  "completedReportReceivedAt": "2026-10-10T08:09:47.034Z",
+  "helper": {
+    "state": "completed",
+    "startedAt": "2026-10-10T08:06:56.359Z",
+    "finishedAt": "2026-10-10T08:09:26.361Z",
+    "delayMs": 150000,
+    "elapsedMs": 150005,
+    "calculation": 361
+  },
+  "waitSegments": [
+    {
+      "startedAt": "2026-10-10T08:06:49.731Z",
+      "finishedAt": "2026-10-10T08:07:44.761Z",
+      "elapsedMs": 55027,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T08:08:13.776Z",
+      "finishedAt": "2026-10-10T08:09:08.793Z",
+      "elapsedMs": 55016,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T08:09:47.027Z",
+      "finishedAt": "2026-10-10T08:09:47.034Z",
+      "elapsedMs": 5,
+      "timedOut": false
+    }
+  ],
+  "result": {
+    "status": "completed",
+    "response": "ZCODE_LONG_WAIT_OK | 361"
+  },
+  "independentChecks": {
+    "taskToNativeAgentAssociation": true,
+    "nativeProfile": true,
+    "actualModelRequests": [
+      {
+        "startedAt": "2026-10-10T08:06:48.858Z",
+        "providerId": "account:bigmodel-individual-coding-plan",
+        "modelId": "GLM-5.3-Flash",
+        "effort": "low"
+      },
+      {
+        "startedAt": "2026-10-10T08:09:26.418Z",
+        "providerId": "account:bigmodel-individual-coding-plan",
+        "modelId": "GLM-5.3-Flash",
+        "effort": "low"
+      },
+      {
+        "startedAt": "2026-10-10T08:09:31.996Z",
+        "providerId": "account:bigmodel-individual-coding-plan",
+        "modelId": "GLM-5.3-Flash",
+        "effort": "low"
+      },
+      {
+        "startedAt": "2026-10-10T08:09:40.277Z",
+        "providerId": "account:bigmodel-individual-coding-plan",
+        "modelId": "GLM-5.3-Flash",
+        "effort": "low"
+      }
+    ],
+    "helperScriptUnchanged": true,
+    "helperScriptSha256": "4cbbd2b6f6d194dda08fae6b6938a8808d896940bed95edb81928311a2db5188",
+    "atLeastTwoTimeoutsThenRealCompletion": true
+  },
+  "limitations": [
+    "Requires an active, manually started ZCode router session.",
+    "No automatic launch of a stopped ZCode execution engine.",
+    "Native running-agent cancellation has not been separately accepted end to end."
+  ],
+  "privacy": "Only allowlisted task/model/effort/timing fields are published. Credentials, headers, leases, raw prompts and local source paths are excluded.",
+  "nativeReceiveCancellation": {
+    "verifiedAt": "2026-10-10T08:13:26.0325542Z",
+    "desktopStopAfterTaskAccepted": true,
+    "workersAfterStop": 0,
+    "scope": "Parent router receive cancellation and worker unregister only; not running-child TaskStop cancellation"
+  }
+}

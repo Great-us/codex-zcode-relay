@@ -1,0 +1,56 @@
+[
+  {
+    "name": "codex-relay-glm53-flash-low",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3-Flash",
+    "effort": "low"
+  },
+  {
+    "name": "codex-relay-glm53-flash-high",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3-Flash",
+    "effort": "high"
+  },
+  {
+    "name": "codex-relay-glm53-flash-max",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3-Flash",
+    "effort": "max"
+  },
+  {
+    "name": "codex-relay-glm53-flashx-low",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3-FlashX",
+    "effort": "low"
+  },
+  {
+    "name": "codex-relay-glm53-flashx-high",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3-FlashX",
+    "effort": "high"
+  },
+  {
+    "name": "codex-relay-glm53-flashx-max",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3-FlashX",
+    "effort": "max"
+  },
+  {
+    "name": "codex-relay-glm53-low",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3",
+    "effort": "low"
+  },
+  {
+    "name": "codex-relay-glm53-high",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3",
+    "effort": "high"
+  },
+  {
+    "name": "codex-relay-glm53-max",
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3",
+    "effort": "max"
+  }
+]
