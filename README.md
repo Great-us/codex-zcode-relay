@@ -30,9 +30,9 @@ worker 只能注册实际可用的 profiles。provider、model 和 effort 精确
 
 ## 生命周期与边界
 
-broker 仅由 controller 自动启动，worker 找不到服务时明确提示先启动 controller。没有客户端连接 5 分钟后 broker 退出；阻塞等待中的连接保持服务存活。任务状态仅保存在内存，断连或重启不会改派或重放任务。
+两端先完成 stdio MCP 初始化和工具发现，不依赖 broker 已存在。controller 在明确工具调用时连接并按需启动 broker；worker 在 `register_worker` 时连接，找不到服务则提示主管先调用 controller 工具。没有客户端连接 5 分钟后 broker 退出；阻塞等待中的连接保持服务存活。任务状态仅保存在内存，断连或重启不会改派或重放任务。`zcode_models` 和 `register_worker` 返回 `bridgeVersion`，可用来核验进程实际加载的版本。
 
-`receive_task` 收到 MCP `notifications/cancelled`、触发 SDK 取消信号时，会立即关闭并注销整个 worker 连接，清除接收订阅，使其未完成任务失败，防止旧订阅领取新任务。后续工具明确要求重载 worker MCP 并重新启动路由器。普通会话结束或停止路由器若未产生取消通知或连接关闭，不能自动召回旧接收；需明确停止旧连接，再启动 worker。controller 连接断开后，仅在下一次明确工具调用且连接为空时尝试一次有界重连；并发调用共享同一尝试，失败后允许后续明确调用重试，没有后台轮询或定时重连。broker 重启后的旧 taskId 会如实返回 Unknown task。worker 始终不自动重连。
+`receive_task` 收到 MCP `notifications/cancelled`、触发 SDK 取消信号时，会立即关闭并注销整个 worker 连接，清除接收订阅，使其未完成任务失败，防止旧订阅领取新任务。0.3 起，明确调用 `register_worker` 即可建立新连接并恢复接收，不必为每次中断重载 MCP；注册前其它 worker 工具会拒绝调用。普通会话结束或停止路由器若未产生取消通知或连接关闭，不能自动召回旧接收；需明确停止旧连接，再启动 worker。controller 连接断开后，仅在下一次明确工具调用且连接为空时尝试一次有界重连；并发调用共享同一尝试，失败后允许后续明确调用重试。worker 仅在明确注册时尝试连接。没有后台轮询、定时重连或任务重放。broker 重启后的旧 taskId 会如实返回 Unknown task。
 
 排队任务可以立即取消；运行任务的取消是协作请求，由 worker 使用真实原生 agentId 调用 TaskStop，确认停止后回报 cancelled。收到请求不表示原生执行已经停止。`report_result` 表示执行完成，最终验收由主管负责。
 
@@ -52,4 +52,4 @@ controller 校验 workspace 的实际路径是否在允许根目录内，这不�
 
 ## 下次手工启动
 
-两端 MCP 配置与 profiles 安装一次后，下次在 ZCode 启用或重载 `codex-relay`，新开桌面会话，选择 `GLM-5.3-Flash / low`，发送生成的 `worker-prompt.txt`。让它注册 worker 并保持 `receive_task`，主管确认连接后即可直接派发。接收被停止后应按安装说明重载 worker，旧任务不会自动补执行。
+两端 MCP 配置与 profiles 安装一次后，下次在 ZCode 启用 `codex-relay`，新开桌面会话，选择 `GLM-5.3-Flash / low`，发送生成的 `worker-prompt.txt`。让它注册 worker 并保持 `receive_task`，主管确认连接后即可直接派发。接收被停止后，可明确要求重新核验、注册并恢复接收，旧任务不会自动补执行。源码更新需要对应 MCP 进程加载新版一次；设置页显示已连接，只证明工具加载成功，不代表模型路由器已经注册并等待任务。

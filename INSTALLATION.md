@@ -11,7 +11,7 @@ node setup.cjs --workspace "<允许工作的绝对目录>"
 
 ## 连接两端
 
-将生成的 controller 配置作为 Codex stdio MCP `zcode-bridge` 安装，参数为当前仓库的 `relay-mcp.cjs controller`。先启动并连接 controller，由它创建本地 broker。
+将生成的 controller 配置作为 Codex stdio MCP `zcode-bridge` 安装，参数为当前仓库的 `relay-mcp.cjs controller`。两端 MCP 均可先启动并发现工具；主管明确调用 `zcode_models` 等 controller 工具时，由它连接并按需创建本地 broker。
 
 将生成的 worker 配置作为 ZCode stdio MCP `codex-relay` 安装，参数为同一个 `relay-mcp.cjs worker`。两端 `ZCODE_RELAY_STATE` 必须相同。worker 必须使用 `timeoutMs:2147483647`；`0` 不能禁用 ZCode 原生执行器超时，默认短超时会终止接收等待。
 
@@ -38,8 +38,8 @@ npm run verify
 
 状态目录中的 `broker-info.json` 记录 PID、PPID、启动时间、owner；`lifecycle.jsonl` 记录连接、退出和错误代码。`relay.json` 含认证 token，不应分享。broker 崩溃或 worker 断连后不自动重放任务，先核对受影响任务再明确重连；保持授权边界。
 
-接收调用收到 MCP `notifications/cancelled` 时，SDK 取消信号会关闭并注销 worker 连接，清除残留订阅，使未完成任务失败。恢复需要重载 ZCode 的 worker MCP，再启动新的路由器会话并注册；旧连接上的后续工具会明确拒绝。普通停止路由器若没有取消通知或断连，不会自动召回旧接收，需明确停止连接并重新启动 worker。controller 断连后，在下一次明确工具调用时进行一次有界重连；并发工具共享该尝试，失败后由下一次明确调用决定是否再试。没有后台 timer、轮询或无限重试，也不会重放旧任务；broker 重启后旧 taskId 返回 Unknown task。worker 不自动重连，仍需重载 worker MCP 并启动路由器。
+接收调用收到 MCP `notifications/cancelled` 时，SDK 取消信号会关闭并注销 worker 连接，清除残留订阅，使未完成任务失败。0.3 起，恢复时重新核验能力并明确调用 `register_worker`，成功后再保持一个 `receive_task`；注册前其它 worker 工具会明确拒绝。无需为每次中断重载 MCP。普通停止路由器若没有取消通知或断连，不会自动召回旧接收，需明确停止连接并重新启动 worker。controller 断连后，在下一次明确工具调用时进行一次有界重连；并发工具共享该尝试，失败后由下一次明确调用决定是否再试。worker 在明确注册时进行一次连接尝试。没有后台 timer、轮询或无限重试，也不会重放旧任务；broker 重启后旧 taskId 返回 Unknown task。
 
 中继断连与 failed 状态不代表原生后台 Agent 已停止，仍须用真实 agentId 调用 TaskStop 并确认。主管等待只在 completed、failed、cancelled 真终态返回结果；取消请求本身不会让等待立即完成。
 
-更新服务源码后需重载对应 MCP 进程。Codex 当前聊天的原生工具连接可能缓存旧进程，重新打开设置不保证当前回合加载新版；必要时在新聊天或重启客户端后确认所加载的服务。新 controller 按明确调用重连的行为只适用于已经加载新版源码的 MCP 进程。移动仓库或 Node 路径变化后重新生成配置。移除时分别删除两端 MCP 设置和手工安装的 profiles。运行目录及 `generated/` 已被 `.gitignore` 排除，发布前仍需检查暂存清单。
+更新服务源码后需让对应 MCP 进程加载新版一次。`zcode_models` 和 `register_worker` 应返回 `bridgeVersion:"0.3.0"`；缺少该字段不能证明已经加载修复。ZCode 需要重新读取设置并刷新连接，新会话使用刷新后的配置；只修改磁盘配置没有已验证的自动重载保证。Codex 当前聊天的原生工具连接也可能缓存旧进程，重新打开设置不保证当前回合加载新版；必要时在新聊天或重启客户端后核验版本。设置页显示已连接只说明 MCP 工具已加载，主管还需确认 `zcode_models.workers` 中存在已注册路由器，才能派发模型任务。移动仓库或 Node 路径变化后重新生成配置。移除时分别删除两端 MCP 设置和手工安装的 profiles。运行目录及 `generated/` 已被 `.gitignore` 排除，发布前仍需检查暂存清单。

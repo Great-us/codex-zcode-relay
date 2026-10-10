@@ -14,7 +14,14 @@ test('actual stdio MCP cancellation unregisters worker and fails in-flight job',
   // Same-stream request ordering confirms the blocked receive has reached the server.
   await call(w,'report_progress',{taskId:task.taskId,lease:delivered.lease,summary:'Pending receive cancellation regression'});
   const final=call(c,'zcode_wait',{taskIds:[task.taskId],timeoutMs:3000});abort.abort();await rejected;const result=data(await final);assert.equal(result.timedOut,false);assert.equal(result.jobs[0].status,'failed');assert.equal(result.jobs[0].details.reason,'worker_lost');
-  assert.deepEqual(data(await call(c,'zcode_models',{})).workers,[]);const after=await call(w,'register_worker',{workerId:'worker',model,profiles:[]});assert.equal(after.isError,true);assert.match(after.content[0].text,/Reload the worker MCP/);
-  const dispatch=await call(c,'zcode_spawn',{workspace,prompt:'Must not be ghost-delivered',...model});assert.equal(dispatch.isError,true);assert.match(dispatch.content[0].text,/No online worker/);
+  assert.deepEqual(data(await call(c,'zcode_models',{})).workers,[]);
+  const before=await call(w,'receive_task',{workerId:'worker'});assert.equal(before.isError,true);assert.match(before.content[0].text,/Call register_worker explicitly/);
+  const after=await call(w,'register_worker',{workerId:'worker',model,profiles:[]});assert.notEqual(after.isError,true);
+  assert.equal(data(await call(c,'zcode_models',{})).workers.length,1);
+  const dispatch=data(await call(c,'zcode_spawn',{workspace,prompt:'Fresh task after explicit registration',...model}));
+  assert.notEqual(dispatch.taskId,task.taskId);const fresh=data(await call(w,'receive_task',{workerId:'worker'}));assert.equal(fresh.taskId,dispatch.taskId);
+  assert.equal(data(await call(c,'zcode_status',{taskId:task.taskId})).status,'failed');
+  const oldReport=await call(w,'report_result',{taskId:task.taskId,lease:delivered.lease,status:'completed',response:'Must not resurrect old work'});assert.equal(oldReport.isError,true);
+  await call(w,'report_result',{taskId:fresh.taskId,lease:fresh.lease,status:'completed',response:'Fresh registration works'});
  }finally{await Promise.allSettled([c?.close(),w?.close(),bootstrap.close()]);if(bootstrap.startedBrokerPid)try{process.kill(bootstrap.startedBrokerPid);}catch(e){if(e.code!=='ESRCH')throw e;}cleanupTempState(state);}
 });

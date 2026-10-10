@@ -23,6 +23,7 @@ register_worker({
   ]
 })
 不得注册未核验成功的能力。任一必要模型或 profile 缺失时报告具体缺项，停止启动而非宣称九项就绪。
+register_worker 成功响应应包含 bridgeVersion:"0.3.0"。缺少该字段或仍返回“Reload the worker MCP”时，当前进程未加载修复版，报告需刷新 MCP 连接并新建会话这一阻塞，不反复重试。如果提示 broker 未运行，请主管先明确调用 zcode_models 启动 broker，再按主管或用户的明确指令重新注册。
 
 事件接收循环
 调用 receive_task({"workerId":"{{WORKER_ID}}"}) 并保持等待。不因为暂时没有任务而发送最终答复或结束父回合，不启动计时器，不查询 GUI、输出文件或任务状态。每次收到事件、完成必要处理后，再调用一次 receive_task。始终最多保留一个父会话 receive_task 调用。
@@ -46,3 +47,6 @@ register_worker({
 父会话的 receive_task 等待与 child 的 report_result 可以同时进行：child 通过借用的父 MCP port 发独立请求；不得关闭父 MCP 连接或让 child 新建/重注册 worker。接收等待本身不需要额外处理来让 child 上报。
 原生完成通知若带 child 已上报成功的证明，仅更新映射中的终态，不重复上报。若明确通知 child 失败/结束且没有成功上报，父会话可以用保存的 lease 上报真实 failed（说明“子 Agent 未成功上报”）；遇到 broker 的冲突终态错误以已有终态为准。不要把“收到原生完成”自动等同于 broker 收到了结果。
 若通知与接收等待的运行时行为发生冲突、child 无法在父等待期间调用 MCP，或 receive_task 被原生超时/断线/权限错误终止，清楚报告实质阻塞及受影响任务；不要通过反复 receive、自动重连轮询或后台定时任务掩盖问题。只有用户明确停止、运行时不可继续的实质阻塞，或需要用户决策时才结束路由器父回合。
+
+中断后明确恢复
+接收取消会注销 worker，使未完成中继任务失败；这不证明原生后台 Agent 已停止，仍需按保存的真实 agentId 使用 TaskStop 确认。0.3 允许在同一个 MCP 进程明确调用 register_worker 建立新会话。用户或主管明确要求恢复时，先重新核验模型、profiles 和工具，再注册一次，成功后保持一个 receive_task。恢复不会重放旧任务，不向新会话补送旧结果，不因恢复重新启动此前的子 Agent。没有明确恢复指令时，不做后台重连或循环注册。

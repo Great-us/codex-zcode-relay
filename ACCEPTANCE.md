@@ -1,6 +1,14 @@
 # 验收记录（2026-10-10）
 
+## 0.3 连接恢复修复
+
+真实 ZCode 日志确认 MCP 已完成四个工具的初始化，但中断后的两次注册均被旧版“Worker receive was interrupted”锁定拒绝。0.3 将 stdio 初始化与 broker 连接分开，并允许明确重新注册恢复 worker；旧任务不重放，注册前拒绝接收和回报，没有后台重连。
+
+`npm test` 20/20 通过；新增实际 stdio 测试验证 broker 尚未启动时两端均能完成 MCP 工具发现、后续连接和任务闭环。取消和 broker 重启测试验证同一 worker MCP 进程重新注册后领取新任务、拒绝旧 lease。`npm run verify` 通过。以上使用协议测试模型，不调用桌面 GLM。新启动的本机 controller 返回 `bridgeVersion:"0.3.0"`；运行中的旧桌面会话仍需加载新版，当前修复尚未完成真实桌面模型验收。
+
 ## 真实桌面长任务
+
+以下为先前 0.2 版本的历史验收，不能代替 0.3 的真实桌面复验。
 
 ZCode 原生后台子智能体使用 `codex-relay-glm53-flash-low`，实际 provider 为 `account:bigmodel-individual-coding-plan`，模型 `GLM-5.3-Flash`，effort `low`。
 
