@@ -33,3 +33,18 @@ python "$env:USERPROFILE\.codex\glm-integration\read-zcode-key.py" --check
 安装器根据当前 Python 和 home 路径渲染模板，先备份 `~/.codex/config.toml`，保留主管默认设置，添加供应商、模型目录和六个 profile。遇到同名但内容不同的配置会停止。不要直接安装含 `@...@` 占位符的源模板。`--check` 只确认 Key 存在；不要手工运行认证助手的无参数模式，因为其标准输出是 Codex 的凭据通道。ZCode 删除或更换本机 Key 后，认证助手会随之使用新的保存状态。
 
 依据：[智谱官方 Codex 配置](https://docs.bigmodel.cn/cn/coding-plan/tool/codex)、[Codex 自定义供应商](https://learn.chatgpt.com/docs/config-file/config-advanced#custom-model-providers)、[Codex 0.162.1 原生 agent role 覆盖实现](https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/core/src/agent/role.rs#L32-L82)。
+
+## 独立 API 连通性探针
+
+探索中也直接调用了智谱 Responses API，先确认模型、强度参数和认证再接入 CLI。`probe-api.py` 从原六组合实验整理而来，复用同目录认证助手，只保存白名单状态；原始模型回复、请求头和 Key 均不保存。这是模型 API 连通性测试，不提供文件、shell、MCP 工具，也不是完整 subagent runtime。
+
+显式执行会消耗 GLM 配额，结果目录必须是新的，建议置于被忽略的 `runtime/`。例如：
+
+```powershell
+python integrations/glm/probe-api.py --model flash --effort low --result-dir "runtime/glm-api-probe-<NEW_RUN>"
+python integrations/glm/probe-api.py --all --result-dir "runtime/glm-api-all-<NEW_RUN>"
+```
+
+替换 `<NEW_RUN>` 后再执行。`--all` 每轮最多两路并发，请求参数显式为 `reasoning.effort`；接受参数不等于验证推理质量。HTTP 连接超时为 300 秒，属于请求传输边界，不是 CLI 子任务总时限。原六组合真实证据见 `acceptance.json`；本次整理只做离线逻辑验证，没有重跑真实 API 测试。
+
+离线检查：`python -m unittest discover -s integrations/glm/test -p "test_*.py"`。共同规则和权限见 [路线](../../docs/routes.md)、[主管规则](../../docs/supervisor-policy.md)和 [生命周期](../../docs/permissions-and-lifecycle.md)。

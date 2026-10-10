@@ -1,0 +1,15 @@
+{
+  "*": "deny",
+  "edit": {
+    "*": "deny",
+    "<ABSOLUTE_OUTPUT_PATH>": "allow"
+  },
+  "read": {
+    "*": "deny",
+    "<ABSOLUTE_FIXTURE_PATH>": "allow"
+  },
+  "bash": "deny",
+  "external_directory": "deny",
+  "question": "deny",
+  "webfetch": "deny"
+}

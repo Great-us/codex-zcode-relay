@@ -1,4 +1,10 @@
-# 使用 ZCode 外部子智能体
+# 使用 GLM 外部子智能体
+
+本仓库包含多条独立执行路径，入口见 `docs/routes.md`。日常优先复用适用的 OpenCode GLM 执行器；需要 Codex CLI 环境时使用 `integrations/glm/run-glm.py`；需要 ZCode 已有桌面会话时用下述 MCP 路由。`experiments/zcode-cli/` 仅为未完成真实模型验收的历史归档，不派生产任务。简单工作由主管直接完成。
+
+OpenCode 使用 `integrations/opencode/run-opencode.py --model flash|full --effort low|high|max --workspace <目录> --prompt-file <任务卡> --result-dir <新的结果目录>`，可加 `--permissions-file`。轻量任务优先 Flash/low，用户指定模型与强度时严格遵守；只使用经核验的档位。工具权限不等于 OS 沙箱，不自动继承主管的连接器、MCP 或审批机制。
+
+每个外部子任务明确文件所有权和授权边界。执行进程启动后保持当前回合，等待实际退出并检查精简回报；没有短的任务总等待时限。并发任务使用独立结果目录，写入任务分配不同文件或 worktree。收到结果后独立检查与测试，未通过就返修；完成关闭任务独占进程，不整体关闭用户共享服务。不宣称协调零 token 成本或原生跨 provider 能力已恢复。
 
 下述 worker/MCP 流程适用于桌面中继。用户明确选择智谱 API 直连时，使用 `integrations/glm/run-glm.py` 启动独立 GLM Codex 进程，按相同的持续等待、独立验收与返修闭环执行，不要求桌面 worker。当前 Codex 0.162.1 不支持 GPT 原生子 agent 跨 provider 切换到智谱。
 

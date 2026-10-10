@@ -1,0 +1,55 @@
+{
+  "verifiedAt": "2026-10-10",
+  "scope": "Publish the explored GLM execution paths, their source adapters, examples and sanitized evidence",
+  "environment": {
+    "platform": "Windows",
+    "node": "24.18.0",
+    "python": "3.11.9",
+    "existingMcpBridgeVersion": "0.3.0",
+    "previouslyVerifiedOpenCode": "1.18.31",
+    "previouslyVerifiedCodexCli": "0.162.1"
+  },
+  "offlineTests": {
+    "mcp": {"passed": 20, "failed": 0},
+    "legacyProtocolAdapters": {"passed": 19, "failed": 0, "realModelCalled": false},
+    "opencodeIntegration": {"passed": 18, "failed": 0, "realModelCalled": false},
+    "responsesApiValidation": {"passed": 4, "failed": 0, "realModelCalled": false},
+    "totalPassed": 61,
+    "mcpTransportVerify": "passed; fake worker, no actual model call"
+  },
+  "supervisorChecks": {
+    "sourceAndConfigSyntax": "passed",
+    "relativeDocumentationLinks": "passed",
+    "gitDiffWhitespace": "passed",
+    "allowlistedPublicationFiles": "passed",
+    "forbiddenCredentialAndRuntimeFiles": "none found",
+    "personalAbsolutePaths": "none found",
+    "conservativeSecretPatternScan": "no matches; this is not a universal secret-detection guarantee",
+    "existingModelAndFileEvidence": "validated against the local accepted evidence; only whitelisted fields copied",
+    "opencodeRunnerByteIdenticalToPreviouslyAcceptedSource": true,
+    "opencodeRunnerSha256": "5905f5b20809f6690e71c8a2a45592cc9953d09b8f8c91f19c4ed369fe968385"
+  },
+  "repairsBeforeAcceptance": [
+    "Probe error events must use JSON-serializable error lists and fail validation",
+    "Require exact actual model/effort pairs, HTTP 200 and all six combinations",
+    "Block provider credential forwarding on upstream redirects",
+    "Reject reused probe result directories before provider startup",
+    "Installer conflict preflight and JSON receipts independently checked",
+    "Permission example deny-before-specific-allow ordering corrected",
+    "Parallel example waits already-started workers even if a later launch fails",
+    "Documentation distinguishes disabling Playwright from disabling all OpenCode MCP servers"
+  ],
+  "testEnvironmentNote": "The restricted Codex tool sandbox blocked strict Windows path resolution in a spawned Python fixture test. The complete OpenCode offline suite passed in the approved host execution context without model, network or credential access. Task permissions were not widened to make the tests pass.",
+  "publicationStatus": {
+    "target": "Great-us/codex-zcode-relay",
+    "privateRepositoryConfirmedBeforePush": true,
+    "branch": "main",
+    "remoteCommitVerification": "Performed after commit/push; the immutable commit and remote verification are reported separately to the user"
+  },
+  "limits": [
+    "Packaged probe scripts were not rerun against the provider during publication; original real model acceptance is separately preserved",
+    "GUI, hooks and native cross-provider spawn are not newly implemented",
+    "Legacy internal ZCode CLI authentication and real-model execution remain unverified",
+    "More than two simultaneous GLM workers, permission equivalence and net token savings remain unquantified"
+  ]
+}

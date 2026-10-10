@@ -1,0 +1,50 @@
+{
+  "executor": "OpenCode external process",
+  "requestedModel": "zhipuai-coding-plan/glm-5.3-flash",
+  "requestedEffort": "low",
+  "elapsedSeconds": 23.0,
+  "exitCode": 0,
+  "terminalReasons": [
+    "tool-calls",
+    "tool-calls",
+    "stop"
+  ],
+  "errorTypes": [],
+  "toolCounts": {
+    "read": 1,
+    "write": 1
+  },
+  "executionCompleted": true,
+  "supervisorAccepted": true,
+  "taskWideTimeout": null,
+  "independentChecks": {
+    "fixtureUnchanged": true,
+    "actualFileToolReadWrite": true,
+    "outputExactMatch": true,
+    "actualSessionModelAndVariant": "glm-5.3-flash / low",
+    "allToolNames": [
+      "read",
+      "write"
+    ]
+  },
+  "fixture": {
+    "id": "codex-glm-file-test",
+    "amounts": [
+      17,
+      29,
+      43
+    ]
+  },
+  "acceptedOutput": {
+    "id": "codex-glm-file-test",
+    "sum": 89,
+    "count": 3
+  },
+  "earlierAttempts": {
+    "accepted": false,
+    "count": 2,
+    "cause": "Read/edit permissions matched OpenCode worktree-relative paths, not the supplied absolute paths.",
+    "repair": "Normalize absolute permission patterns to OpenCode worktree-relative paths without changing file scope."
+  },
+  "privacy": "Local paths, session IDs, token usage and raw model output omitted."
+}

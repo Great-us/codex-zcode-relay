@@ -1,4 +1,22 @@
-# Codex ↔ ZCode 桌面任务中继
+# Codex ↔ GLM 外部子智能体执行路径
+
+本项目保存 Codex 主管调用 GLM 外部执行器的多条路径：OpenCode、Codex CLI 直连智谱，以及 ZCode 桌面 MCP 中继。主管派发有边界的任务，保持当前回合等待真实回报，再独立验收和返修。模型执行器不等同于 GPT 主管的原生跨供应商 `spawn_agent`。
+
+## 功能入口
+
+| 路径 | 入口 | 已验证范围 | 当前用途 |
+| --- | --- | --- | --- |
+| OpenCode GLM | [integrations/opencode](integrations/opencode/README.md) | 两个模型 × low/high/max 的六个真实请求组合；两路并行；实际文件读写 | 本机当前推荐的日常调用路径 |
+| Codex CLI 直连 GLM | [integrations/glm](integrations/glm/README.md) | Responses API 六组合；独立 Codex GLM 进程和文件工具 | 需要 Codex CLI 执行环境时使用 |
+| ZCode 桌面 MCP | [安装](INSTALLATION.md)与下述中继说明 | 真实桌面 Flash/low 长等待和完整 GLM/max 审查；中继协议测试 | 使用 ZCode 已有模型会话和原生 profile |
+| ZCode 内部 CLI 实验 | [experiments/zcode-cli](experiments/zcode-cli/README.md) | 仅协议单元测试；独立 CLI OAuth 失败，未完成真实模型验收 | 历史源码归档，默认禁用 |
+| GUI、hooks、原生跨 provider 等探索 | [全部路线与实验状态](docs/routes.md) | 逐项标明已验证、受阻或仅讨论 | 保留结论，避免将方案误认为功能 |
+
+入口选择依据是这台机器的实测和维护环节，未做同任务性能、成本或权限等价的全面对照。OpenCode 推荐不代表它具备与 Codex 相同的操作系统沙箱。复现所需版本与范围见各 integration 的验收记录。
+
+共同约定见 [任务与等待规则](docs/supervisor-policy.md)、[权限和资源生命周期](docs/permissions-and-lifecycle.md)、[并发调用](docs/concurrency.md)、[配置维护](docs/maintenance.md)及 [任务卡模板](templates/task-card.md)。默认离线验证方式与各路径真实模型证据见 [验证索引](docs/verification.md)。全局规则模板需要用户主动合并到本机 `~/.codex/AGENTS.md`；克隆仓库不会自动修改应用配置。
+
+## ZCode 桌面 MCP 中继
 
 Codex 主管通过 `zcode-bridge` controller MCP 派发独立任务；ZCode 桌面常驻会话通过 `codex-relay` worker MCP 接收任务，以指定原生 agent profile 启动后台子 agent，并回报结果。通信使用本地 named pipe 和事件等待，不需要任务轮询、cron 或另做 CLI OAuth。
 
@@ -48,7 +66,7 @@ controller 校验 workspace 的实际路径是否在允许根目录内，这不�
 
 测试、协议验证及 setup fixture 使用仓库被忽略的 `runtime/test/` 下 `mkdtemp` 创建的专属临时根，只清理本进程登记的具体根目录；不依赖仓库外层路径，也不扫描或删除其它目录。
 
-真实 `GLM-5.3-Flash / low` 桌面子智能体已完成 150.005 秒任务，主管经历两次完整的 55 秒超时后收到结果并独立验收。真实桌面停止接收后也确认 worker 已注销。详情及当前聊天工具连接缓存的限制见 [ACCEPTANCE.md](ACCEPTANCE.md)，脱敏字段见 [long-wait-evidence.json](long-wait-evidence.json)。本仓库不包含账户原始请求、运行状态或历史 CLI 引擎实验。
+真实 `GLM-5.3-Flash / low` 桌面子智能体已完成 150.005 秒任务，主管经历两次完整的 55 秒超时后收到结果并独立验收。真实桌面停止接收后也确认 worker 已注销。详情及当前聊天工具连接缓存的限制见 [ACCEPTANCE.md](ACCEPTANCE.md)，脱敏字段见 [long-wait-evidence.json](long-wait-evidence.json)。本仓库不包含账户原始请求或运行状态；早期 CLI 引擎实验单独归档且未被记为真实模型验收通过。
 
 0.3 还完成了真实 `GLM-5.3 / max` 的恢复代码审查任务，六次 55 秒超时后收到回报，14 次实际模型请求与指定配置一致，主管独立验收通过。证据见 [mcp-v3-evidence.json](mcp-v3-evidence.json)。当前聊天缓存旧 controller 的原生工具入口仍需另行恢复；此次使用标准 MCP SDK 客户端连接同一服务。
 

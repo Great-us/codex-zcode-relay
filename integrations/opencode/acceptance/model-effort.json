@@ -1,0 +1,157 @@
+{
+  "verifiedAt": "2026-10-10",
+  "opencodeVersion": "1.18.31",
+  "provider": "zhipuai-coding-plan",
+  "results": [
+    {
+      "model": "glm-5.3-flash",
+      "variant": "low",
+      "elapsedSeconds": 9.282,
+      "exitCode": 0,
+      "response": "OPENCODE_GLM_OK|glm-5.3-flash|low|323",
+      "expected": "OPENCODE_GLM_OK|glm-5.3-flash|low|323",
+      "terminalReasons": [
+        "stop"
+      ],
+      "errorTypes": []
+    },
+    {
+      "model": "glm-5.3",
+      "variant": "low",
+      "elapsedSeconds": 9.297,
+      "exitCode": 0,
+      "response": "OPENCODE_GLM_OK|glm-5.3|low|323",
+      "expected": "OPENCODE_GLM_OK|glm-5.3|low|323",
+      "terminalReasons": [
+        "stop"
+      ],
+      "errorTypes": []
+    },
+    {
+      "model": "glm-5.3-flash",
+      "variant": "high",
+      "elapsedSeconds": 5.391,
+      "exitCode": 0,
+      "response": "OPENCODE_GLM_OK|glm-5.3-flash|high|323",
+      "expected": "OPENCODE_GLM_OK|glm-5.3-flash|high|323",
+      "terminalReasons": [
+        "stop"
+      ],
+      "errorTypes": []
+    },
+    {
+      "model": "glm-5.3",
+      "variant": "high",
+      "elapsedSeconds": 33.391,
+      "exitCode": 0,
+      "response": "OPENCODE_GLM_OK|glm-5.3|high|323",
+      "expected": "OPENCODE_GLM_OK|glm-5.3|high|323",
+      "terminalReasons": [
+        "stop"
+      ],
+      "errorTypes": []
+    },
+    {
+      "model": "glm-5.3-flash",
+      "variant": "max",
+      "elapsedSeconds": 5.781,
+      "exitCode": 0,
+      "response": "OPENCODE_GLM_OK|glm-5.3-flash|max|323",
+      "expected": "OPENCODE_GLM_OK|glm-5.3-flash|max|323",
+      "terminalReasons": [
+        "stop"
+      ],
+      "errorTypes": []
+    },
+    {
+      "model": "glm-5.3",
+      "variant": "max",
+      "elapsedSeconds": 17.125,
+      "exitCode": 0,
+      "response": "OPENCODE_GLM_OK|glm-5.3|max|323",
+      "expected": "OPENCODE_GLM_OK|glm-5.3|max|323",
+      "terminalReasons": [
+        "stop"
+      ],
+      "errorTypes": []
+    }
+  ],
+  "wireRequests": [
+    {
+      "model": "glm-5.3",
+      "reasoning_effort": "low",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "output_config": null,
+      "max_tokens": 32000,
+      "http_status": 200
+    },
+    {
+      "model": "glm-5.3-flash",
+      "reasoning_effort": "low",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "output_config": null,
+      "max_tokens": 32000,
+      "http_status": 200
+    },
+    {
+      "model": "glm-5.3",
+      "reasoning_effort": "high",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "output_config": null,
+      "max_tokens": 32000,
+      "http_status": 200
+    },
+    {
+      "model": "glm-5.3-flash",
+      "reasoning_effort": "high",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "output_config": null,
+      "max_tokens": 32000,
+      "http_status": 200
+    },
+    {
+      "model": "glm-5.3-flash",
+      "reasoning_effort": "max",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "output_config": null,
+      "max_tokens": 32000,
+      "http_status": 200
+    },
+    {
+      "model": "glm-5.3",
+      "reasoning_effort": "max",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "output_config": null,
+      "max_tokens": 32000,
+      "http_status": 200
+    }
+  ],
+  "supervisorValidation": {
+    "sixExactResponses": true,
+    "sixWireModelEffortPairs": true,
+    "allHttp200": true
+  },
+  "concurrency": {
+    "simultaneousProcesses": 2,
+    "largerConcurrencyVerified": false
+  },
+  "privacy": "Whitelisted model/effort/status/arithmetic evidence only. Session IDs, keys, headers, local paths, raw requests and reasoning traces omitted."
+}

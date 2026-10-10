@@ -2,7 +2,7 @@
   "name": "codex-zcode-relay",
   "version": "0.3.0",
   "private": true,
-  "description": "Local event-driven MCP relay between Codex and ZCode desktop native agents",
+  "description": "GLM external task execution through OpenCode, Codex CLI and the event-driven ZCode desktop MCP relay",
   "type": "commonjs",
   "engines": {
     "node": ">=24"
@@ -16,6 +16,8 @@
     "worker": "node relay-mcp.cjs worker",
     "setup": "node setup.cjs",
     "test": "node --test test/*.test.cjs",
-    "verify": "node verify-relay.cjs"
+    "verify": "node verify-relay.cjs",
+    "test:opencode": "python -m unittest discover -s integrations/opencode/test -p \"test_*.py\"",
+    "test:legacy": "node --test experiments/zcode-cli/test/*.test.cjs"
   }
 }
