@@ -50,6 +50,8 @@ controller 校验 workspace 的实际路径是否在允许根目录内，这不�
 
 真实 `GLM-5.3-Flash / low` 桌面子智能体已完成 150.005 秒任务，主管经历两次完整的 55 秒超时后收到结果并独立验收。真实桌面停止接收后也确认 worker 已注销。详情及当前聊天工具连接缓存的限制见 [ACCEPTANCE.md](ACCEPTANCE.md)，脱敏字段见 [long-wait-evidence.json](long-wait-evidence.json)。本仓库不包含账户原始请求、运行状态或历史 CLI 引擎实验。
 
+0.3 还完成了真实 `GLM-5.3 / max` 的恢复代码审查任务，六次 55 秒超时后收到回报，14 次实际模型请求与指定配置一致，主管独立验收通过。证据见 [mcp-v3-evidence.json](mcp-v3-evidence.json)。当前聊天缓存旧 controller 的原生工具入口仍需另行恢复；此次使用标准 MCP SDK 客户端连接同一服务。
+
 ## 下次手工启动
 
 两端 MCP 配置与 profiles 安装一次后，下次在 ZCode 启用 `codex-relay`，新开桌面会话，选择 `GLM-5.3-Flash / low`，发送生成的 `worker-prompt.txt`。让它注册 worker 并保持 `receive_task`，主管确认连接后即可直接派发。接收被停止后，可明确要求重新核验、注册并恢复接收，旧任务不会自动补执行。源码更新需要对应 MCP 进程加载新版一次；设置页显示已连接，只证明工具加载成功，不代表模型路由器已经注册并等待任务。

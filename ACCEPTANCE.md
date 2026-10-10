@@ -4,7 +4,11 @@
 
 真实 ZCode 日志确认 MCP 已完成四个工具的初始化，但中断后的两次注册均被旧版“Worker receive was interrupted”锁定拒绝。0.3 将 stdio 初始化与 broker 连接分开，并允许明确重新注册恢复 worker；旧任务不重放，注册前拒绝接收和回报，没有后台重连。
 
-`npm test` 20/20 通过；新增实际 stdio 测试验证 broker 尚未启动时两端均能完成 MCP 工具发现、后续连接和任务闭环。取消和 broker 重启测试验证同一 worker MCP 进程重新注册后领取新任务、拒绝旧 lease。`npm run verify` 通过。以上使用协议测试模型，不调用桌面 GLM。新启动的本机 controller 返回 `bridgeVersion:"0.3.0"`；运行中的旧桌面会话仍需加载新版，当前修复尚未完成真实桌面模型验收。
+`npm test` 20/20 通过；新增实际 stdio 测试验证 broker 尚未启动时两端均能完成 MCP 工具发现、后续连接和任务闭环。取消和 broker 重启测试验证同一 worker MCP 进程重新注册后领取新任务、拒绝旧 lease。`npm run verify` 通过。以上使用协议测试模型，不调用桌面 GLM。
+
+随后完成 0.3 的真实桌面复验：controller 和真实 worker 注册均返回 `bridgeVersion:"0.3.0"`；`codex-relay-glm53-max` 原生子 Agent 执行恢复修复审查，14 次实际请求均为 `GLM-5.3 / max`。任务 `10a7f47e-a37d-4751-a00e-f159f27a8499` 经六次完整的 55 秒超时后，在第七段收到 completed，派发到回报约 7 分 34 秒。helper 实际执行 150,007 ms，结果为 361；主管独立核对原生 Agent 关联、请求元数据、helper 一次执行及文件写入范围，仓库未被子 Agent 修改。审查未发现四项恢复改动中的新可复现缺陷。脱敏字段见 [mcp-v3-evidence.json](mcp-v3-evidence.json)。
+
+本次使用标准 MCP SDK 客户端连接同一生产服务；当前聊天的原生工具入口仍缓存旧 controller，其恢复尚未验收。没有使用 GUI 或智谱 API 直连替代桌面任务。真实桌面接收中断后的同进程重注册，以及运行子 Agent 的 TaskStop 取消，尚未在此次成功任务中单独复验；不能以协议测试或正常任务推断这些桌面行为已经通过。
 
 ## 真实桌面长任务
 

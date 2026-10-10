@@ -1,0 +1,170 @@
+{
+  "bridgeVersion": "0.3.0",
+  "taskId": "10a7f47e-a37d-4751-a00e-f159f27a8499",
+  "agentId": "agent_3bc6b5ba-a729-49a1-9df6-72d83e33bee6",
+  "profile": "codex-relay-glm53-max",
+  "model": {
+    "providerId": "account:bigmodel-individual-coding-plan",
+    "modelId": "GLM-5.3",
+    "effort": "max"
+  },
+  "helper": {
+    "state": "completed",
+    "startedAt": "2026-10-10T18:15:38.302Z",
+    "finishedAt": "2026-10-10T18:18:08.310Z",
+    "delayMs": 150000,
+    "elapsedMs": 150007,
+    "calculation": 361
+  },
+  "waitSegments": [
+    {
+      "startedAt": "2026-10-10T18:14:34.927Z",
+      "finishedAt": "2026-10-10T18:15:29.989Z",
+      "elapsedMs": 55038,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T18:15:41.090Z",
+      "finishedAt": "2026-10-10T18:16:36.112Z",
+      "elapsedMs": 55020,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T18:16:46.297Z",
+      "finishedAt": "2026-10-10T18:17:41.323Z",
+      "elapsedMs": 55024,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T18:17:57.185Z",
+      "finishedAt": "2026-10-10T18:18:52.201Z",
+      "elapsedMs": 55015,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T18:19:25.835Z",
+      "finishedAt": "2026-10-10T18:20:20.882Z",
+      "elapsedMs": 55039,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T18:20:47.302Z",
+      "finishedAt": "2026-10-10T18:21:42.328Z",
+      "elapsedMs": 55025,
+      "timedOut": true
+    },
+    {
+      "startedAt": "2026-10-10T18:21:42.331Z",
+      "finishedAt": "2026-10-10T18:21:57.343Z",
+      "elapsedMs": 15013,
+      "timedOut": false
+    }
+  ],
+  "actualModelRequests": [
+    {
+      "startedAt": "2026-10-10T18:14:44.552Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:15:38.682Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:15:47.342Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:15:55.455Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:16:23.943Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:16:52.067Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:18:37.378Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:19:38.272Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:20:04.107Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:20:39.599Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:21:26.527Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:21:40.688Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:21:57.398Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    },
+    {
+      "startedAt": "2026-10-10T18:22:03.622Z",
+      "providerId": "account:bigmodel-individual-coding-plan",
+      "modelId": "GLM-5.3",
+      "effort": "max"
+    }
+  ],
+  "checks": {
+    "taskToNativeAgent": true,
+    "actualModelAndEffort": true,
+    "actualWorkerRegistrationVersion": "0.3.0",
+    "realHelperCompletion": true,
+    "helperExecutedOnce": true,
+    "fileWriteScope": true,
+    "twoTimeoutsThenTerminalEvent": true,
+    "trackedRepositoryUnchangedBeforeDocumentation": true,
+    "supervisorReviewAccepted": true
+  },
+  "limitations": [
+    "Current chat native MCP tool connection still caches old controller; this run used a fresh standard MCP SDK client to the same installed service.",
+    "Real desktop interruption and explicit registration recovery not separately tested in this run."
+  ],
+  "taskDispatchToReportMs": 453631,
+  "result": {
+    "status": "completed",
+    "verification": "ZCODE_V3_WAIT_OK | 361",
+    "reviewConclusion": "未发现四项恢复改动中的新可复现缺陷"
+  }
+}
